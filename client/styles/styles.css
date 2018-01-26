@@ -58,7 +58,20 @@ form input[type=text] {
     font-size: 12px;
     padding: 5px;
 }
-
+#submit {
+    width: 100px;
+    text-align: center;
+    background: blue;
+    border-radius: 10px;
+    color: white;
+}
+#submit:hover {
+    cursor: pointer;
+    text-align: center;
+    background: lightblue;
+    border-radius: 10px;
+    color: white;
+}
 .chat {
     padding: 5px;
     margin-bottom: 5px;
