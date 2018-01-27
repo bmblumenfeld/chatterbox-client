@@ -77,9 +77,19 @@ form input[type=text] {
     margin-bottom: 5px;
     background-color: #eee;
 }
-
-.chat .username {
+.chat .header {
+  display: flex;
+  flex-direction: row;    
+}
+.header .username {
     font-weight: 800;
+}
+.header .date {
+      
+}
+
+.header .roomname {
+    
 }
 
 .chat:hover {

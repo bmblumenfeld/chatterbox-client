@@ -1,14 +1,4 @@
-$(document).ready(function() {
-  $('#submit').on('click', function(event) {
-    var msg = {
-      username: 'poopybutt',
-      text: $('#message').val(),
-      roomname: 'poopland'
-    };
-    msg = JSON.stringify(msg);
-    app.send(msg);
-  });
-});
+
 var app = {
   server: 'http://parse.sfm6.hackreactor.com/chatterbox/classes/messages/',
   messages: []
@@ -19,7 +9,7 @@ app.init = function() {
 app.send = function(message) {
   $.ajax({
     // This is the url you should use to communicate with the parse API server.
-    url: url,
+    url: this.server,
     type: 'POST',
     data: message,
     contentType: 'application/json',
@@ -33,9 +23,9 @@ app.send = function(message) {
   });
 };
 app.fetch = function() {
-  var date = new Date('August 19, 1975 23:15:30 UTC');
-  date = date.toJSON();
-  var url = this.server + '?where={"createdAt":{"$lt":' + date + '}}';
+  // var date = new Date('August 19, 1975 23:15:30 UTC');
+  // date = date.toJSON();
+  // var url = this.server + '?where={"createdAt":{"$lt":' + date + '}}';
   // var params = {
   //   "createdAt": {
   //     "$all": {}
@@ -46,20 +36,20 @@ app.fetch = function() {
   //   }
   // };
   //url += JSON.stringify(params);
-  console.log(url);
+  // console.log(url);
   $.ajax({
-    url: url,
+    url: this.server,
     type: 'GET',
     dataType: 'json',
-
+    data: 'order=-createdAt',
     //success: ({results}) => {
-    success: (data) => {
-      console.log(data);
+    success: ({results}) => {
+      //console.log(data); 
 
-      //console.log(results);
+      console.log(results);
       var newestMsgId = this.messages.length ? this.messages[this.messages.length - 1].objectId : null;
       // console.log(this.messages);
-      console.log(newestMsgId);
+      // console.log(newestMsgId);
       var oldestNewMsgIndex = 0;
       if (!newestMsgId) {
         oldestNewMsgIndex = results.length;
@@ -71,13 +61,56 @@ app.fetch = function() {
       $chats = $('#chats');
       for (var i = oldestNewMsgIndex - 1; i >= 0; i--) {
         this.messages.push(results[i]);
-        var $chat = $('<div class = "chat">\
-        <div class = "username"></div><div class = "msg"></div></div>');
-        $chat.find('.username').text(this.messages[this.messages.length - 1].username);
-        $chat.find('.msg').text(this.messages[this.messages.length - 1].text);
-        $chat.prependTo($chats);
+        //gets date in readable format 
+        var date = new Date(this.messages[this.messages.length - 1].createdAt);
+        date = date.toString();
+        date = date.slice(0, 15);
+        var message = {
+          username: this.messages[this.messages.length - 1].username,
+          text: this.messages[this.messages.length - 1].text,
+          roomname: this.messages[this.messages.length - 1].roomname,
+          date: date   
+        };
+        this.renderMessage(message);
       }
     }
   });
 };
+app.renderMessage = function ({username, text, roomname, date}) {
+  var $chats = $('#chats');
+  var $chat = $('<div class = "chat">\
+  <header class = "header"><div class = "username"></div><div class = "date"></div><div class = "roomname"></div></header><div class = "msg"></div></div>');
+  $chat.find('.username').text(username);
+  $chat.find('.date').text(date);
+  $chat.find('.msg').text(text);
+  $chat.find('.roomname').text(roomname);
+  $chat.prependTo($chats);  
+    
+};
+app.clearMessages = function () {
+  $('#chats').empty();  
+};
+
+app.renderRoom = function () {
+  var $rooms = $('#roomSelect');
+  var $room = $('<div class = "room"></div>');
+  $rooms.append($room);  
+};
+app.handleUsernameClick = function () {
+  alert("you really made a friend!");  
+};
+$(document).ready(function() {
+  $('#submit').on('click', function(event) {
+    var msg = {
+      username: 'KevinLamFan',
+      text: $('#message').val(),
+      roomname: 'All Kevin All The Time'
+    };
+    msg = JSON.stringify(msg);
+    app.send(msg);
+  });
+  $('#chats').on('click','.username', function(event) {
+    app.handleUsernameClick.bind(window);
+  }); 
+});
 app.init();
