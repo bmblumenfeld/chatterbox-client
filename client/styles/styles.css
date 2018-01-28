@@ -5,7 +5,9 @@ body {
     font-family: arial, sans-serif;
 }
 
-#main, #chats {
+#chats {
+    display: flex;
+    flex-direction: column;
     width: 500px;
     margin: auto;
     text-align: left;
@@ -13,6 +15,12 @@ body {
     padding: 50px 60px;
     border: solid #ddd;
     border-width: 0 1px 1px 1px;
+}
+#main {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    
 }
 
 #main h1 {
@@ -45,7 +53,30 @@ body {
     color: green;
     line-height: 13px;
 }
-
+.title {
+    
+}
+.content {
+    display: flex;
+    flex-direction: row;
+}
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+.feed {
+    display: flex;
+    flex-direction: column;
+}
+.chatbox {
+    display: flex;
+    flex-direction: row;
+    height: 60px;
+}
+input {
+  width: 100%;    
+}
 form {
     padding: 20px;
     padding-left: 0;
@@ -91,7 +122,9 @@ form input[type=text] {
 .header .roomname {
     
 }
-
+.roomSelect {
+  
+}
 .chat:hover {
     background-color: #ddd;
 }

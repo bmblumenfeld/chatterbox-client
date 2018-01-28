@@ -6,32 +6,28 @@
     <link rel="stylesheet" href="styles/styles.css">
 
     <!-- dependencies -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script>
-      // YOU DO NOT NEED TO EDIT THIS CODE
-      if (!/(&|\?)username=/.test(window.location.search)) {
-        var newSearch = window.location.search;
-        if (newSearch !== '' & newSearch !== '?') {
-          newSearch += '&';
-        }
-        newSearch += 'username=' + (prompt('What is your name?') || 'anonymous');
-        window.location.search = newSearch;
-      }
-    </script>
     <!-- your scripts -->
+    <script src="../lib/jquery.js"></script>
     <script src="env/config.js"></script>
     <script src="scripts/app.js"></script>
   </head>
   <body>
     <div id="main">
-      <h1>chatterbox</h1>
-      <!-- Your HTML goes here! -->
-      <form>
-        Message: <input id='message' type="text" name="message"><br>
-        <div id="submit">Submit</div>
-      </form>
+      <div class="title"><a href = "index.html">chatterbox</a></div>
+      <div class="content">
+        <div class="sidebar">
+          <div class="profile"></div>
+          <div class="roomSelect"></div>
+        </div>
+        <div class="feed">
+          <div class="chatbox">
+            Message: <input id='message' type="text" name="message">
+            <div id="submit">Submit</div>
+          </div>
+          <div id="chats"></div>
+        </div>
+        <div class = "friends"></div>
+      </div>
     </div>
-    <div id="chats"></div>
-
   </body>
 </html>
